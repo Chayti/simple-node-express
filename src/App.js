@@ -1,6 +1,7 @@
 // client side updated
 import './App.css';
 import { useEffect, useRef, useState } from 'react';
+import axios from 'axios';
 
 function App() {
   const [users, setUsers] = useState([]);
@@ -17,20 +18,31 @@ function App() {
     const name = nameRef.current.value
     const email = emailRef.current.value
     const newUser = { name: name, email: email }
-    fetch('http://localhost:3000/users', {
-      method: 'post',
-      headers: {
-        'content-type': 'application/json'
-      },
-      body: JSON.stringify(newUser)
-    })
-      .then(res => res.json())
+
+    // sending data using axios
+    axios.post('http://localhost:3000/users', newUsery)
       .then(data => {
         console.log(data)
         const addedUser = data
         const newUsers = [...users, addedUser]
         setUsers(newUsers)
       })
+
+    // sending data using express
+    // fetch('http://localhost:3000/users', {
+    //   method: 'post',
+    //   headers: {
+    //     'content-type': 'application/json'
+    //   },
+    //   body: JSON.stringify(newUser)
+    // })
+    //   .then(res => res.json())
+    //   .then(data => {
+    //     console.log(data)
+    //     const addedUser = data
+    //     const newUsers = [...users, addedUser]
+    //     setUsers(newUsers)
+    //   })
 
     nameRef.current.value = ''
     emailRef.current.value = ''
